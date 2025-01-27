@@ -15,7 +15,21 @@ const courseSchema = new mongoose.Schema({
 
 const Course = mongoose.model("Course", courseSchema);
 
-async function createCourse() {
+async function createCourse1() {
+  const course = new Course({
+    name: "Node JS Course",
+    author: "Mosh",
+    tags: ["angular", "backend"],
+    isPublished: true,
+  });
+
+  const result = await course.save();
+  console.log(result);
+}
+
+createCourse1();
+
+async function createCourse2() {
   const course = new Course({
     name: "Angular Course",
     author: "Mosh",
@@ -27,7 +41,7 @@ async function createCourse() {
   console.log(result);
 }
 
-createCourse();
+createCourse2();
 
 async function getCoursesByProperties() {
   const courses = await Course
@@ -70,3 +84,37 @@ async function getCoursesByLimits() {
 }
 
 getCoursesByLimits();
+
+
+async function getCoursesByRegEx() {
+  
+  const courses = await Course
+    //starts with Mosh
+    .find({ author: /^Mosh/ })
+    //end with (case insensitive colocar i)
+    .find({ author: /Hamedani$/i })
+    //contains
+    .find({ author: /.*Hamedani.*/i })
+    .limit(10)
+    .sort({ name: 1 })
+    .select({ name: 1, tags: 1 });
+  
+  console.log(courses);
+}
+
+getCoursesByRegEx();
+
+async function getCountCourses() {
+  const courses = await Course
+    .find({
+      author: "Mosh",
+      isPublished: true,
+    })
+    .limit(10)
+    .sort({ name: 1 })
+    .countDocuments();
+  
+  console.log("Quantity: ", courses);
+}
+
+getCountCourses();
