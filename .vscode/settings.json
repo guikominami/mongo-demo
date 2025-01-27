@@ -29,7 +29,7 @@
   "editor.stickyScroll.scrollWithEditor": false,
   "editor.stickyScroll.enabled": false,
   "editor.insertSpaces": true,
-  "editor.formatOnSave": true,
+  "editor.formatOnSave": false,
   "editor.wordWrapColumn": 40,
   "editor.codeActionsOnSave": {
     "source.fixAll": "never",

@@ -10,6 +10,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "mongo-demo": "file:",
     "mongoose": "^8.9.5"
   }
 }

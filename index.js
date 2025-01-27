@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 mongoose
-  .connect("mongodb://mongodb:password@localhost:27017/playground")
+  .connect("mongodb://localhost:27017/playground")
   .then(() => console.log("Connected to MongoDB..."))
   .catch((err) => console.log("Could not connect to MongoDB...", err.message));
 
@@ -17,9 +17,9 @@ const Course = mongoose.model("Course", courseSchema);
 
 async function createCourse() {
   const course = new Course({
-    name: "Node.js Course",
+    name: "Angular Course",
     author: "Mosh",
-    tags: ["node", "backend"],
+    tags: ["angular", "frontend"],
     isPublished: true,
   });
 
@@ -28,3 +28,45 @@ async function createCourse() {
 }
 
 createCourse();
+
+async function getCoursesByProperties() {
+  const courses = await Course
+    .find({
+      author: "Mosh",
+      isPublished: true,
+    })
+    .limit(10)
+    .sort({ name: 1 })
+    .select({ name: 1, tags: 1 });
+  
+  console.log(courses);
+}
+
+getCoursesByProperties();
+
+async function getCoursesByLimits() {
+  
+  //eq: equal
+  //ne: not equal
+  //gt: greater than
+  //gte: greater than or equal to
+  //lt: less than
+  //lte: less than or equal to
+  //in: 
+  //nin: not in
+  
+  const courses = await Course
+    .find({
+      //price: { $gte: 10, $lte: 20 }
+      //price: { $in: [10, 15, 20] }
+    })
+    .or([{ author: "Mosh"}, {isPublished: true}])
+    .and([{  }])
+    .limit(10)
+    .sort({ name: 1 })
+    .select({ name: 1, tags: 1 });
+  
+  console.log(courses);
+}
+
+getCoursesByLimits();
