@@ -67,7 +67,7 @@ docker run --name mongodb6 -p 27017:27017 -e MONGODB_INITDB_ROOT_USERNAME=mongod
 docker run --name mongodb1 -p 27017:27017 -d mongodb/mongodb-community-server:7.0.0-ubi8
 
 #test the connection
-docker exec -it mongodb6 mongosh --username mongodb --password password
+docker exec -it mongodb1 mongosh --username mongodb --password password
 
 show dbs
 

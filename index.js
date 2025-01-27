@@ -15,7 +15,7 @@ const courseSchema = new mongoose.Schema({
 
 const Course = mongoose.model("Course", courseSchema);
 
-async function createCourse1() {
+async function createCourse() {
   const course = new Course({
     name: "Node JS Course",
     author: "Mosh",
@@ -27,21 +27,7 @@ async function createCourse1() {
   console.log(result);
 }
 
-createCourse1();
-
-async function createCourse2() {
-  const course = new Course({
-    name: "Angular Course",
-    author: "Mosh",
-    tags: ["angular", "frontend"],
-    isPublished: true,
-  });
-
-  const result = await course.save();
-  console.log(result);
-}
-
-createCourse2();
+createCourse();
 
 async function getCoursesByProperties() {
   const courses = await Course
@@ -118,3 +104,24 @@ async function getCountCourses() {
 }
 
 getCountCourses();
+
+
+async function getCoursesPagination() {
+  
+  const pageSize = 10;
+  const pageNumber = 2;
+  
+  const courses = await Course
+    .find({
+      author: "Mosh",
+      isPublished: true,
+    })
+    .skip((pageNumber - 1) * pageSize)
+    .limit(10)
+    .sort({ name: 1 })
+    .select({ name: 1, tags: 1 });
+  
+  console.log(courses);
+}
+
+getCoursesByProperties();
