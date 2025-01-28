@@ -22,50 +22,51 @@ async function updateCourseQueryFirst(id){
   //modify its properties
   //save()
   
-  const course = await Course.find({_id : id});
+  const course = await Course.findById(id);
   if (!course){
-    console.log("no id")
+    console.log("no course")
     return;
   } 
-  console.log(course)
   
   course.isPublished = true;
-  course.author = "Another Author";
+  course.author = "Guille Kominamis";
   
-  //const result = await course.save()
- // console.log(result)
+  const result = await course.save()
+  console.log(result)
 }
 
-updateCourseQueryFirst("5a68fdc3615eda645bc6bdec");
+//updateCourseQueryFirst("6798d3e60ce75213b78a03a6");
 
-async function updateCourse(id){
-  //Approach: query first
-  //find by id
-  //modify its properties
-  //save()
-  
+async function updateCourseFirstUpdate(id){
   //approach: update first
   //update directly
   //optionally: get the updated document
+  //, {new: true} retorna o documento alterado, se não tiver com esse set,
+  //  retorna o documento original
+  const result = await Course.findByIdAndUpdate(id, {
+    $set: {
+      author: "Guille 4",
+      isPublished: false
+    }
+  }, {new: true});
   
-  
-  
+  console.log(result);
 }
 
-updateCourse();
+updateCourseFirstUpdate("6798d3e60ce75213b78a03a6");
 
 
-// async function getCourses(){
-//   const courses = await Course
-//     .find({isPublished: true})
-//     .select("name author id");
+async function getCourses(){
+  const courses = await Course
+    .find({isPublished: false})
+    .select("name author id isPublished");
   
-//     return courses;
-// }
+    return courses;
+}
 
-// async function run(){
-//   const courses = await getCourses();  
-//   console.log(courses)
-// }
+async function run(){
+  const courses = await getCourses();  
+  console.log(courses)
+}
 
-//run();
+run();
