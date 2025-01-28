@@ -11,6 +11,7 @@ const courseSchema = new mongoose.Schema({
   tags: [String],
   date: { type: Date, default: Date.now },
   isPublished: Boolean,
+  price: Number
 });
 
 const Course = mongoose.model("Course", courseSchema);
